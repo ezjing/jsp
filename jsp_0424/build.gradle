@@ -1,0 +1,36 @@
+plugins {
+    id 'java'
+    id 'war'
+}
+
+group 'com.bitc'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    junitVersion = '5.9.1'  // 자바유닛이 정상 작동하는지 테스트
+}
+
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+dependencies {  // 의존성 : 필요시 외부 라이브러리 쓰면 자동으로 다운받음
+    compileOnly('javax.servlet:javax.servlet-api:4.0.1')
+    // https://mvnrepository.com/artifact/javax.servlet.jsp/javax.servlet.jsp-api
+    compileOnly 'javax.servlet.jsp:javax.servlet.jsp-api:2.3.3'
+
+
+    testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
+}
+
+test {
+    useJUnitPlatform()
+}
