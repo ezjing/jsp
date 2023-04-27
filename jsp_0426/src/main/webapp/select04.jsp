@@ -6,6 +6,7 @@
     To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="java.sql.*" %>
 <%--  문제 1) PreparedStatement 를 사용하는 SQL 쿼리문을 실행하고 그 결과를 출력하는 프로그램을 작성하세요  --%>
 <%--  데이터 베이스 접속 정보가 있는 dbconn.jsp 를 include하여 사용 하는 방식으로 구현하세요  --%>
 <%@ include file="dbconn.jsp"%>
