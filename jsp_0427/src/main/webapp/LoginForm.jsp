@@ -11,16 +11,16 @@
 <%--  클라이언트의 접속이 종료되거나 웹 브라우저를 완전히 닫을 경우, 지정된 시간을 초과하면 세션이 종료되면서 서버에서 저장된 내용이 삭제 됨  --%>
 
 <%--  세션 내장 객체 주요 메소드  --%>
-<%--  getAttribute(이름) : 지정된 이름의 세션 데이터를 출력  --%>
-<%--  getAttributeNames() : 해당 세션에 등록된 모든 세션 데이터의 이름을 출력  --%>
+<%--  getAttribute(이름) : 지정된 이름의 세션 데이터를 출력 v  --%>
+<%--  getAttributeNames() : 해당 세션에 등록된 모든 세션 데이터의 이름을 출력(배열로 출력)  --%>
 <%--  getCreationTime() : 해당 세션이 등록된 시간을 출력  --%>
 <%--  getId() : 해당 세션 ID를 출력  --%>
 <%--  getLastAccessedTime() : 세션으로 서버에 마지막으로 요청한 시간을 출력  --%>
-<%--  getMaxInactiveInterval() : 세션 최대 유지 시간을 출력  --%>
+<%--  getMaxInactiveInterval() : 세션 최대 유지 시간을 출력 v  --%>
 <%--  isNew() : 해당 세션이 새로 생성된 세션인지 아닌지 출력  --%>
-<%--  removeAttribute(이름) : 지정된 이름의 세션 데이터를 삭제  --%>
-<%--  setAttribute(이름, 데이터) : 지정한 데이터를 지정한 세션 이름으로 등록  --%>
-<%--  setMaxinactiveInterval(시간) : 세션 최대 유지 시간을 설정  --%>
+<%--  removeAttribute(이름) : 지정된 이름의 세션 데이터를 삭제 v  --%>
+<%--  setAttribute(이름, 데이터) : 지정한 데이터를 지정한 세션 이름으로 등록 v  --%>
+<%--  setMaxinactiveInterval(시간) : 세션 최대 유지 시간을 설정 v  --%>
 <%--  invalidate() : 해당 세션의 모든 데이터를 삭제  --%>
 
 <html>

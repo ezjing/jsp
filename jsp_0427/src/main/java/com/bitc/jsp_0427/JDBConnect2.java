@@ -70,8 +70,8 @@ public class JDBConnect2 {
     }
 
     public int postWrite(String postTitle, String postContent, String postUser) {
-        String sql = "INSERT INTO board (title, content, id, postdate) ";
-        sql += "VALUES (?, ?, ?, NOW()) ";
+        String sql = "INSERT INTO board (title, content, id, postdate) ";   // 게시물 쓰는거니까 insert
+        sql += "VALUES (?, ?, ?, NOW()) ";  // PreparedStatement() 방식
 
         int result = 0;
 
@@ -79,11 +79,11 @@ public class JDBConnect2 {
 //      생성된 SQL과 함께 PreparedStatement 객체를 생성
             pstmt = conn.prepareStatement(sql);
 //      sql의 ? 부분에 실제 데이터를 추가
-            pstmt.setString(1, postTitle);
+            pstmt.setString(1, postTitle);  // num가 인덱스 0번임 생략된것
             pstmt.setString(2, postContent);
             pstmt.setString(3, postUser);
 
-//      insert 쿼리문 실행
+//      insert 쿼리문 실행 (데이터 베이스로 쿼리문 전달.. 데이터베이스에 저장까지 된것임)
             result = pstmt.executeUpdate();
         }
         catch (SQLException e) {
@@ -95,14 +95,14 @@ public class JDBConnect2 {
 
     public List<Map<String, String>> postList() {
 //    게시물 목록을 가져오는 SQL 쿼리
-        String sql = "SELECT num, title, id, postdate, visitcount FROM board ";
-//    가져온 결과값을 저장할 ArrayList
+        String sql = "SELECT num, title, id, postdate, visitcount FROM board "; // 게시물 출력하는 거니까 SELECT
+//    가져온 결과값을 저장할 ArrayList 선언
         List<Map<String, String>> dataList = new ArrayList<>();
 
         try {
 //      PreparedStatement 를 사용하여 SQL 쿼리는 질의
             pstmt = conn.prepareStatement(sql);
-//      결과값 가져오기
+//      결과값 가져오기(write 부분에서 데이터를 넣었다)
             rs = pstmt.executeQuery();
 
             while (rs.next()) {
