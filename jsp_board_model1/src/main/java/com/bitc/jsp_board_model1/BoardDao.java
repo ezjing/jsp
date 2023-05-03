@@ -6,10 +6,28 @@ import java.util.List;
 
 // 실제 데이터베이스와 연결해서 데이터를 CRUD(Create(생성), Read(읽기), Update(갱신), Delete(삭제))하기 위한 클래스
 public class BoardDao extends JDBConnect {
+
 //   검색 결과 수
-//    public int selectCount() {
-//
-//    }
+    public int totalCount() {
+        int result = 0;
+
+        String sql = "SELECT count(*) AS cnt FROM board ";
+
+        try {
+            stmt = conn.createStatement();
+            rs = stmt.executeQuery(sql);
+
+            while (rs.next()) {
+                result = rs.getInt("cnt");
+            }
+        }
+        catch (SQLException e) {
+            System.out.println("SELECT 사용 중 오류가 발생했습니다.");
+            e.printStackTrace();
+        }
+        return result;
+    }
+
     // 전체 게시물 목록 출력
     public List<BoardDto> selectList() {
         // 게시물의 목록을 저장할 빈 List 선언
@@ -49,6 +67,51 @@ public class BoardDao extends JDBConnect {
 
         return dataList;
     }
+
+    public List<BoardDto> selectList(int startNum, int postSize) {
+        // 게시물의 목록을 저장할 빈 List 선언
+        List<BoardDto> dataList = new ArrayList<BoardDto>();    // 배열 크기가 어떻게 될지 몰라 배열보다 리스트가 좋음
+
+        // 게시물 목록을 가져올 SQl 쿼리 생성
+        String sql= "SELECT num, title, id, postdate, visitcount FROM board ";
+        sql += "ORDER BY num DESC ";
+        sql += "LIMIT ?, ? ";
+
+        try {
+            // SQL 쿼리 명령을 위해서 Statement 객체 생성 (conn 객체를 통해서)
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, startNum);
+            pstmt.setInt(2, postSize);
+
+            // SQL 쿼리문 실행, 결과 받아오기(rs에)
+            rs = pstmt.executeQuery();
+
+            // 가져온 결과물을 하나씩 출력
+            while (rs.next()) {
+                // 게시물 1개의 정보를 저장할 수 있는 BoardDto 객체 생성
+                BoardDto board = new BoardDto();
+
+                // board에 데이터 받기
+                // 게시물 정보 저장
+                board.setPostNum(rs.getInt("num"));
+                board.setPostTitle(rs.getString("title"));
+                board.setPostWriteUser(rs.getString("id"));
+                board.setPostDate(rs.getString("postdate"));
+                board.setPostVisitCount(rs.getInt("visitcount"));
+
+                // board 에 데이터 받은거 dataList에 추가
+                // 게시물 전체 리스트를 저장하는 dataList에 BoardDto 객체 추가
+                dataList.add(board);
+            }
+        }
+        catch (SQLException e) {
+            System.out.println("게시물 목록 조회 중 오류가 발생했습니다.");
+            e.printStackTrace();
+        }
+
+        return dataList;
+    }
+
     // 지정한 게시물 내용 출력
     public BoardDto selectBoard(int postNum) {
         BoardDto board = new BoardDto();
@@ -164,6 +227,5 @@ public class BoardDao extends JDBConnect {
             System.out.println("조회수 업데이트 중 오류가 발생했습니다.");
             e.printStackTrace();
         }
-
     }
 }

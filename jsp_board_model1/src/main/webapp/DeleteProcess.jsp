@@ -8,6 +8,8 @@
 <%--  화면이 출력되는 페이지가 아니기 때문에 html 코드 모두 지워도 됨.  --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="com.bitc.jsp_board_model1.BoardDto" %> <%--  삭제만 하는데에 dto 사실 필요 없음  --%>
+<%--  세션 확인  --%>
+<%@ include file="IsLoggedIn.jsp"%>
 <%@ page import="com.bitc.jsp_board_model1.BoardDao" %>
 
 <%

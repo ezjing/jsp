@@ -30,7 +30,7 @@
     <%--  스타일 순서 지켜주기  --%>
     <%--  CSS  --%>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+            integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <%--  제이쿼리  --%>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <%--  부트스트랩  --%>
@@ -69,16 +69,9 @@
 
 </head>
 <body>
-<header class="mb-4">
-    <nav class="navbar navbar-expand-sm navbar-dark bg-dark text-secondary mb-3">
-        <ul class="my-0">
-            <li class="nav-link"><a href="#" class="nav-link">메뉴 1</a></li>
-        </ul>
-    </nav>
-    <div class="container my-4 py-5 bg-secondary bg-opacity-50">
-        <h1 class="text-center">Model1 방식 게시판 글 확인 페이지</h1>
-    </div>
-</header>
+
+<%@ include file="Header.jsp" %>
+
 <main class="container my-4 p-0">
     <%--  readonly disalbed로 수정되면 안되는 부분들 넣어주기  --%>
     <div class="row my-3">
@@ -128,27 +121,11 @@
         <div class="col-sm d-flex justify-content-start">
             <button type="button" class="btn btn-secondary float-start" id="btn-list">목록</button>
         </div>
-        <div class="col-sm d-flex justify-content-end"> <%--  삭제, 수정 버튼 입력순서 주의  --%>
-            <%--  1. form을 사용한 방식  --%>
-            <%--  form을 사용 시 form 태그의 자식태그로 포함되어 있는 input 태그의 데이터만 서버로 전송  --%>
-<%--            <form action="DeleteProcess.jsp" method="get">  &lt;%&ndash;  method get이든 post이든 상관없다  &ndash;%&gt;--%>
-<%--                <input type="hidden" name="postNum" value="<%=board.getPostNum()%>">--%>
-<%--                <button type="submit" class="btn btn-danger float-end">1번 방식 삭제</button>--%>
-<%--            </form>--%>
-            <%--  2. a태그를 사용한 방식  --%>
-            <%--  a태그를 이용하여 직접 DeleteProcess.jsp로 접속하여 게시물 삭제  --%>
-<%--            <a href="DeleteProcess.jsp?postNum=<%=board.getPostNum()%>" class="btn btn-danger">2번 방식 삭제</a>--%>
-            <%--  3. 자바스크립트를 사용하는 방식  --%>
-            <button type="button" class="btn btn-danger float-end" id="btn-delete">3번 방식 삭제</button>
-            <%--  1. a 태그를 사용하여 BoardUpdate.jsp 로 이동  --%>
-<%--            <a href="BoardUpdate.jsp?postNum<%=board.getPostNum()%>" class="btn btn-primary ms-2">수정</a>--%>
-            <%--  2. 자바스크립트를 사용하여 BoardUpdate.jsp 로 이동  --%>
-            <button type="button" class="btn btn-primary float-end ms-2" id="btn-edit">수정</button>
-        </div>
+        <%@ include file="IsBoardBtn.jsp"%>
     </div>
 </main>
-<footer class="container-fluid my-5 border-top ">
-    <p class="lead text-muted text-center">made by fullstack505</p>
-</footer>
+
+<%@ include file="Footer.jsp" %>
+
 </body>
 </html>
