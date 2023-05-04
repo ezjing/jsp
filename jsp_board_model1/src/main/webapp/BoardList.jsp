@@ -51,7 +51,7 @@
 
     // 게시물 전체 리스트 가져오기
 //    List<BoardDto> boardList = dao.selectList();
-    List<BoardDto> boardList = dao.selectList(start, pageSize);
+    List<BoardDto> boardList = dao.selectList(start-1, pageSize);
     // DB 연결 해제
 
     dao.dbClose();
@@ -146,7 +146,7 @@
             <%--  다음 페이지 버튼  --%>
         <%
             if (temp <= totalPage) {
-                pagingStr += "<a href='BoardList.jsp?page" + temp + "'>다음블록</a>";
+                pagingStr += "<a href='BoardList.jsp?pageNum=" + temp + "'>다음블록</a>";
             }
 
             // 화면 출력
