@@ -23,11 +23,12 @@
 <div class="container my-4">
     <h4>List 컬렉션 이용하기</h4>
     <%
+        // List 타입으로 생성은 했지만 내장객체에 저장X, 표현식으로 출력해야함(표현언어는 내장객체에 저장된 데이터만 사용 가능)
         ArrayList<Person> pList = new ArrayList<Person>();
         pList.add(new Person("성삼문", 55));
         pList.add(new Person("박팽년", 60));
     %>
-    <c:set var="personList" value="<%=pList%>" scope="request" />
+    <c:set var="personList" value="<%=pList%>" scope="request" />   <%-- 리퀘스트 영역에 저장  --%>
     <ul>
         <li>이름 : ${ requestScope.personList[0].name}</li>
         <li>나이 : ${personList[0].age}</li>
@@ -35,11 +36,12 @@
 
     <h4>Map 컬렉션 이용하기</h4>
     <%
+        // Map 타입으로 생성은 했지만 내장객체에 저장X, 표현식으로 출력해야함(표현언어는 내장객체에 저장된 데이터만 사용 가능)
         Map<String, Person> pMap = new HashMap<String, Person>();
         pMap.put("personArgs1", new Person("하위지", 65));
         pMap.put("personArgs2", new Person("이개", 67));
     %>
-    <c:set var="personMap" value="<%=pMap%>" scope="request" />
+    <c:set var="personMap" value="<%=pMap%>" scope="request" /> <%-- 리퀘스트 영역에 저장  --%>
     <ul>
         <li>이름 : ${ requestScope.personMap.personArgs2.name}</li>
         <li>나이 : ${personMap.personArgs2.age}</li>
