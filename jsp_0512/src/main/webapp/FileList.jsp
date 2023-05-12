@@ -59,7 +59,7 @@
             <td><%=file.getSfile()%></td>
             <td><%=file.getPostdate()%></td>
             <%--  URLEncoder : 인코딩 태그. 원본 파일명, 실제 파일명 UTF-8로 인코딩  --%>
-            <td><a href='Download.jsp=?oName=<%=URLEncoder.encode(file.getOfile(), "UTF-8")%>&sName=<%=URLEncoder.encode(file.getSfile(), "UTF-8")%>'>[다운로드]</a></td>
+            <td><a href='Download.jsp?oName=<%=URLEncoder.encode(file.getOfile(), "UTF-8")%>&sName=<%=URLEncoder.encode(file.getSfile(), "UTF-8")%>'>[다운로드]</a></td>
         </tr>
         <%
             }
