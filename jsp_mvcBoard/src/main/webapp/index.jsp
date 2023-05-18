@@ -12,7 +12,7 @@
 
 <%--  index 뜸과 동시에 list.jsp 로 이동하게끔 설정  --%>
 <%
-    response.sendRedirect("/view/list.do");
+    response.sendRedirect("/mvcBoard/List.do");
 %>
 </body>
 </html>
