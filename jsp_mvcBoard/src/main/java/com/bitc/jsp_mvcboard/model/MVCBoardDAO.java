@@ -14,7 +14,7 @@ public class MVCBoardDAO extends JDBConnect {
     public List<MVCBoardDTO> selectBoardList() {
         List<MVCBoardDTO> boardList = new ArrayList<>();
 
-        String sql = "SELECT post_idx, post_title, post_writer, post_visits, post_date, post_ofile ";
+        String sql = "SELECT post_idx, post_title, post_writer, post_visits, post_date, post_ofile, post_sfile ";
         sql += "FROM mvcboard ";
         sql += "ORDER BY post_idx DESC;";
 
@@ -31,6 +31,7 @@ public class MVCBoardDAO extends JDBConnect {
                 board.setPostVisits(rs.getInt("post_visits"));
                 board.setPostDate(rs.getString("post_date"));
                 board.setPostOfile(rs.getString("post_ofile"));
+                board.setPostSfile(rs.getString("post_sfile"));
 
                 boardList.add(board);
             }
@@ -77,7 +78,7 @@ public class MVCBoardDAO extends JDBConnect {
     public MVCBoardDTO selectBoardDetail(int idx) {
         MVCBoardDTO board = new MVCBoardDTO();
 
-        String sql = "SELECT post_idx, post_title, post_content, post_writer, post_date, post_ofile, post_visits, post_dn_count ";
+        String sql = "SELECT post_idx, post_title, post_content, post_writer, post_date, post_ofile, post_sfile, post_visits, post_dn_count ";
         sql += "FROM mvcboard ";
         sql += "WHERE post_idx = ? ";
 
@@ -93,6 +94,7 @@ public class MVCBoardDAO extends JDBConnect {
                 board.setPostWriter(rs.getString("post_writer"));
                 board.setPostDate(rs.getString("post_date"));
                 board.setPostOfile(rs.getString("post_ofile"));
+                board.setPostSfile(rs.getString("post_sfile"));
                 board.setPostVisits(rs.getInt("post_visits"));
                 board.setPostDnCount(rs.getInt("post_dn_count"));
             }
@@ -157,4 +159,62 @@ public class MVCBoardDAO extends JDBConnect {
 
         return result;
     }
+
+    public int updateBoard(MVCBoardDTO board) {
+        int result = 0;
+
+        String sql = "UPDATE mvcboard ";
+        sql += "SET post_title = ?, post_writer = ?, post_pass = ?, post_content = ?, post_date = NOW() ";
+        sql += "WHERE post_idx = ? ";
+
+
+        try {
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, board.getPostTitle());
+            pstmt.setString(2, board.getPostWriter());
+            pstmt.setString(3, board.getPostPass());
+            pstmt.setString(4,board.getPostContent());
+            pstmt.setInt(5, board.getPostIdx());
+
+            result = pstmt.executeUpdate();
+        }
+        catch (SQLException e) {
+            System.out.println("***** 데이터 베이스에 UPDATE 중 오류가 발생했습니다. *****");
+            System.out.println("***** Error :" + e.getMessage() +  " *****");
+            e.printStackTrace();
+        }
+
+        return result;
+    }
+
+    public void updateBoardVisits(int postIdx) {
+        String sql = "UPDATE mvcboard SET post_visits = post_visits + 1 WHERE post_idx = ? ";
+
+        try {
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, postIdx);   // pstmt에 값 넣어주는거 깜박하지 말기
+            pstmt.executeUpdate();
+        }
+        catch (SQLException e) {
+            System.out.println("***** 데이터 베이스에 UPDATE 중 오류가 발생했습니다. *****");
+            System.out.println("***** Error :" + e.getMessage() +  " *****");
+            e.printStackTrace();
+        }
+    }
+
+    public void updateBoardDownCount(int postIdx) {
+        String sql = "UPDATE mvcboard SET post_dn_count = post_dn_count + 1 WHERE post_idx = ? ";
+
+        try {
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, postIdx);
+            pstmt.executeUpdate();
+        }
+        catch (SQLException e) {
+            System.out.println("***** 데이터 베이스 UPDATE 중 오류가 발생했습니다. *****");
+            System.out.println("***** Error :" + e.getMessage() +  " *****");
+            e.printStackTrace();
+        }
+    }
 }
+

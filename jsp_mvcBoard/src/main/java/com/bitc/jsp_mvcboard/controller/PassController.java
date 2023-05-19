@@ -7,7 +7,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 @WebServlet("/mvcBoard/Pass.do")
 public class PassController extends HttpServlet {
@@ -35,18 +37,25 @@ public class PassController extends HttpServlet {
 
         // 3. 글번호를 기준으로 해당 게시물의 비밀번호와 사용자가 입력한 비밀번호가 같은지 확인
         boolean confirmed = dao.equalsPassword(postIdx, postPass);
-        dao.dbColse();
+        dao.dbClose();
 
         // 4. 삭제 및 수정
         if (confirmed) {
             // 수정 페이지로 이동
             if (postMode.equals("edit")) {
+                // 비밀번호를 EditController로 전달(이미 한번 비밀번호 검증 했기때문에 굳이 필요하진 않아보임 주석처리)
+                // HttpSession : 세션 영역에 데이터를 저장하기 위한 클래스, request 객체에서 세션 정보를 가져와야 함
+//                HttpSession session = req.getSession();
+//                session.setAttribute("postPass", postPass);
 
+
+                // sendRedirect는 request 영역 전달 X, forward는 request 영역 전달 O (399p 참고)
+                resp.sendRedirect("/mvcBoard/Edit.do?idx=" + postIdx);
             }
             else if (postMode.equals("delete")) {   // 현재 게시글 삭제
                 dao = new MVCBoardDAO();
                 int result = dao.deleteBoard(postIdx);
-                dao.dbColse();
+                dao.dbClose();
 
                 if (result == 1) {
                     // 삭제 메시지 출력
@@ -59,7 +68,15 @@ public class PassController extends HttpServlet {
             }
         }
         else {
+            // 자바스크립트를 출력할 클래스를 사용할 예정
+            String js = "<script>";
+            js += "alert('비밀번호가 틀렸습니다.');";
+            js += "history.back();";
+            js += "</script>";
 
+            resp.setContentType("text/html;charset=UTF-8");
+            PrintWriter out = resp.getWriter();
+            out.println(js);
         }
     }
 }

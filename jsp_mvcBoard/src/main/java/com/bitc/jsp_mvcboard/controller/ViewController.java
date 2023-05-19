@@ -17,12 +17,16 @@ public class ViewController extends HttpServlet {
         // 1. 전달받은 게시물 번호 가져오기(전달될땐 전부 문자열로 들고옴)
         int idx = Integer.parseInt(req.getParameter("idx"));
 
-        // 2. 데이터 베이스에 연결하여 게시물 번호에 맞는 게시물 정보를 가져오기
+        // 2. 데이터 베이스에 연결하여 해당 게시물의 조회수 업데이트
         MVCBoardDAO dao = new MVCBoardDAO();
-        MVCBoardDTO board = dao.selectBoardDetail(idx);
-        dao.dbColse();
+        dao.updateBoardVisits(idx);
 
-        // 3. view 페이지에 데이터 전달(request 영역에 데이터 저장)
+
+        // 3. 데이터 베이스에 연결하여 게시물 번호에 맞는 게시물 정보를 가져오기
+        MVCBoardDTO board = dao.selectBoardDetail(idx);
+        dao.dbClose();
+
+        // 4. view 페이지에 데이터 전달(request 영역에 데이터 저장)
         req.setAttribute("board", board);
 
         req.getRequestDispatcher("/view/view.jsp").forward(req, resp);

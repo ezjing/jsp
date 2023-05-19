@@ -22,7 +22,7 @@ public class JDBConnect {
         }
     }
 
-    public void dbColse() {
+    public void dbClose() {
         try {
             if (rs != null) {rs.close();}
             if (stmt != null) {stmt.close();}

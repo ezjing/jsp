@@ -39,7 +39,9 @@
     </script>
 </head>
 <body>
-<c:import url="/layout/header.jsp"></c:import>
+<c:import url="/layout/header.jsp">
+    <c:param name="pageName" value="confirmedPage"></c:param>
+</c:import>
 
 <main class="container my-4 py-4">
     <div class="row">

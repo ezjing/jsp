@@ -17,7 +17,7 @@ public class ListController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         MVCBoardDAO dao = new MVCBoardDAO();
         List<MVCBoardDTO> boardList = dao.selectBoardList();
-        dao.dbColse();
+        dao.dbClose();
 
         req.setAttribute("boardList", boardList);
 
